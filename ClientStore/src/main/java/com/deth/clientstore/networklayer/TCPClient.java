@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
+
 /**
  * Class that handle connection with the server
  * @author david
@@ -132,10 +133,5 @@ public class TCPClient {
         
         
     }
-    
-    
-    
-     
-    
     
 }
