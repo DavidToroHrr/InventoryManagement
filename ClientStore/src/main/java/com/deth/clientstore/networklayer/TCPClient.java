@@ -15,7 +15,7 @@ import javax.net.ssl.SSLSocketFactory;
 
 /**
  * Class that handle connection with the server
- * @author breaze
+ * @author david
  */
 public class TCPClient {
     private String serverAddress;
@@ -25,12 +25,21 @@ public class TCPClient {
     private DataOutputStream outputStream;
 
     public TCPClient(String serverAddress, int port) {
-        this.serverAddress = serverAddress;
-        this.port = port;
+        try {
+            this.serverAddress = serverAddress;
+            this.port = port;
+            connect();
+        } catch (IOException ex) {
+            Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
     
     public void connect() throws IOException{
         //clientSocket = new (serverAddress, port);
+        System.out.println("ENTRAMOS A CONNCET PARA CREAR EL SOCKET");
+        System.out.println("en connect: sadress, port"+serverAddress+" "+port);
+
         SSLSocketFactory socketFactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
         clientSocket = (SSLSocket)socketFactory.createSocket(serverAddress, port);
         System.out.println("Connection established");
@@ -38,16 +47,24 @@ public class TCPClient {
         outputStream = new DataOutputStream(clientSocket.getOutputStream());
     }
     
-    public String sendMessage(String name, String lastName){
+    public String sendMessage(StringBuilder sb){
+        //TODO: String action,SSLSocket clientSocket,string prodcuctName
         String response = "Error";
         try {
-            connect();
-            StringBuilder sb = new StringBuilder();
-            sb.append(name).append(":").append(lastName);
+            if (clientSocket == null || clientSocket.isClosed()) {
+                throw new IOException("El socket no está conectado.");
+            }
+            if (outputStream == null) {
+                throw new IOException("El outputStream no está inicializado.");
+            }
+            
+            //System.out.println("ss"+clientSocket.getInetAddress());
+            //aqui pasamos el sb a string
             String message = sb.toString();
             System.out.println("Sending: "+message);
-            outputStream.writeUTF(message);
-            response = inputStream.readUTF();
+            outputStream.writeUTF(message);//aquí se envía el mensaje
+            System.out.println("mensaje enviado de manera exitosa");
+            response = inputStream.readUTF();//aquí obtenemos la respuesta del servidor
             System.out.println("Response: "+response);
         } catch (IOException ex) {
             System.out.println("Client error: "+ex.getMessage());
@@ -57,6 +74,41 @@ public class TCPClient {
         return response;
     }
     
+    public String buildMessage(String action,String productName,String productDescription,float productPrice,int quantity){
+   
+        StringBuilder sb= new StringBuilder();
+        sb.append(action).append(":")
+                .append(this.clientSocket.getInetAddress().getHostAddress()).append(":")
+                .append(productName).append(":")
+                .append(productDescription).append(":")
+                .append(productPrice).append(":")
+                .append(quantity);
+        
+        String message=sendMessage(sb);     
+        return message;
+        
+    }
+    /*PASAR EL SOCKET Y PASAR LA ACTION*/
+    public void buildMessage(String action,String productName){
+
+        //método para enviar el mensaje de consultar, eliminar
+        StringBuilder sb= new StringBuilder();
+        sb.append(action).append(this.clientSocket.getInetAddress()).append(productName);
+        sendMessage(sb);
+    }
+    
+    
+    //TODO: para enviar el mensaje se deben de tener otros tipos, para crear necesitamos
+    //crear: 
+    //private int quantity;
+    //private int id;
+    //private String productName;
+    //private String productDescription;
+    //private float productPrice;
+    
+    //eliminar: productName
+    //consultar: productName
+    //editar: productName, puede(cantidad,id,nombrem,descripción,)
     public void closeConnection(){
         try{
             if(inputStream != null){
