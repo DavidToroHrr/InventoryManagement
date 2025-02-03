@@ -121,7 +121,7 @@ public class TCPClient {
     }
     
     public boolean buildCsv(String inventorty){//podemos hacerlo boolean
-        if (csvManager.builInventoryCsv(inventorty)) {
+        if (csvManager.buildInventoryCsv(inventorty)) {
             return true;
         }
         return false;

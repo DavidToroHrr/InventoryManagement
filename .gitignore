@@ -1,3 +1,7 @@
 /VirtualStore/target/
 /ClientStore/target/
 /ServerStore/target/
+/ClientStore/configuration.properties
+/ClientStore/demo_tcp.12
+/ServerStore/configuration.properties
+/ServertStore/demo_tcp.12

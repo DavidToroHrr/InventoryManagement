@@ -21,7 +21,7 @@ public class UserInterface extends javax.swing.JFrame {
      */
     public UserInterface() {
         initComponents();
-        client = new TCPClient("192.168.192.31", 9090);
+        client = new TCPClient("10.147.17.172", 9090);
 
     }
 
