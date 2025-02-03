@@ -201,28 +201,43 @@ public class UserInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
         //añadir
         //tendríamos que llamar una función para enviar el msg al server
-        String name=nameProduct.getText();
-        float price=Float.parseFloat(priceProduct.getText());
-        String description=productDescription.getText();
-        int quantity=Integer.parseInt(quantityProduct.getText());
         
-        String message=client.buildMessage("add", name, description, price,quantity);
-        JOptionPane.showMessageDialog(null, message, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        
+        if (nameProduct.getText().isBlank() | priceProduct.getText().isBlank() | productDescription.getText().isBlank() | quantityProduct.getText().isBlank() ) {
+            JOptionPane.showMessageDialog(null, "Todos los campos deben de estar llenos", "ERROR", JOptionPane.ERROR_MESSAGE);
 
+        }else{
+            String name=nameProduct.getText();
+            float price=Float.parseFloat(priceProduct.getText());
+            String description=productDescription.getText();
+            int quantity=Integer.parseInt(quantityProduct.getText());
+            
+            String message=client.buildMessage("add", name, description, price,quantity);
+            JOptionPane.showMessageDialog(null, message, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+        
+        
         
     }//GEN-LAST:event_addProductsActionPerformed
 
     private void deleteProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteProductsActionPerformed
         // TODO add your handling code here:
         //eliminar
-        String name=nameProduct.getText();
-        String message=client.buildMessage("delete", name);
-        JOptionPane.showMessageDialog(null, message, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        if (nameProduct.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "Debe de especificar el producto a eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
+
+        }else{
+            String name=nameProduct.getText();
+            String message=client.buildMessage("delete", name);
+            JOptionPane.showMessageDialog(null, message, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_deleteProductsActionPerformed
 
     private void editProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProductsActionPerformed
         // TODO add your handling code here:
         //editar
+        
         
     }//GEN-LAST:event_editProductsActionPerformed
 

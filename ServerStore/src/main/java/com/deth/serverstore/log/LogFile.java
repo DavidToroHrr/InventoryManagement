@@ -3,11 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.deth.serverstore.log;
+ 
+
 
 /**
  *
- * @author david
+ * @author Diego Molina
  */
 public class LogFile {
+    
+   
     
 }
