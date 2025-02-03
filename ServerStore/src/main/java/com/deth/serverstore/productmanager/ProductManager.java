@@ -21,7 +21,13 @@ public class ProductManager {
         products = new ArrayList<>();
     }
 
-    public boolean createProduct(String[] response) {
+    public String createProduct(String[] response) {
+        String message="";
+        if (verifyProduct(response[2])) {
+            message="Error...el producto: "+response[2]+" ya existe";
+            return message;
+        }
+        
         String productName=response[2];
         String productDescription=response[3];
         float productPrice=Float.parseFloat(response[4]);
@@ -29,16 +35,32 @@ public class ProductManager {
         
         Product p1 = new Product(productName, productDescription, productPrice, quantity);
         products.add(p1);
-        return true;
+        message="Producto creado con éxito";
+        return message;
     }
 
-    public boolean deleteProduct(String name) {
+    public String deleteProduct(String name) {
         // Método correcto 
+        String message="";
+        if (!verifyProduct(name)){
+            message=("Error...el producto: "+name+" no existe");
+            return message;
+        }
+        
         Iterator<Product> iterator = products.iterator();
         while (iterator.hasNext()) {
             Product product = iterator.next();
             if (product.getProductName().equals(name)) {
                 iterator.remove(); // 
+                return "producto"+name+"eliminado satisfactoriamente";
+            }
+        }
+        return message;
+    }
+    
+    public boolean verifyProduct(String name){
+        for (Product product : products) {
+            if (product.getProductName().equals(name)) {
                 return true;
             }
         }

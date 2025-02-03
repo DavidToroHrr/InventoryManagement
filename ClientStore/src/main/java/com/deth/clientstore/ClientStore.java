@@ -19,10 +19,8 @@ import java.util.logging.Logger;
  * @author david
  */
 public class ClientStore {
-    private TCPClient client;
-
+    
     public ClientStore() {
-        client = new TCPClient("192.168.192.31", 9090);
     }
     
     public static void main(String[] args) {
@@ -50,7 +48,6 @@ public class ClientStore {
             System.out.println("Certificado encontrado correctamente.");
         }
         
-        
         String sslPassword = p.getProperty("SSL_PASSWORD");
         System.setProperty("javax.net.ssl.keyStore",sslRoute);
         System.setProperty("javax.net.ssl.keyStorePassword",sslPassword);
@@ -59,27 +56,8 @@ public class ClientStore {
         System.setProperty("javax.net.ssl.trustStorePassword", sslPassword);
         System.setProperty("javax.net.ssl.trustStoreType", "PKCS12");
         
-        
-       ///////////////////////////////////////
-       //        Scanner in = new Scanner(System.in);
-
-        //System.out.println("Type your name");
-        //String name = in.nextLine();
-        //System.out.println("Type your last name");
-        //String lastName = in.nextLine();
-        
-        //String response = client.sendMessage(name,lastName);
-        //System.out.println(response);
-        
-        ////////////////////////////////////////
-        
     }
 
-    /**
-     * @return the client
-     */
-    public TCPClient getClient() {
-        return client;
-    }
+    
     
 }

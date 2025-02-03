@@ -23,11 +23,13 @@ public class TCPClient {
     private SSLSocket clientSocket;
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
-
+    private boolean connected;
+    
     public TCPClient(String serverAddress, int port) {
         try {
             this.serverAddress = serverAddress;
             this.port = port;
+            this.connected=false;
             connect();
         } catch (IOException ex) {
             Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
@@ -39,7 +41,8 @@ public class TCPClient {
         //clientSocket = new (serverAddress, port);
         System.out.println("ENTRAMOS A CONNCET PARA CREAR EL SOCKET");
         System.out.println("en connect: sadress, port"+serverAddress+" "+port);
-
+        
+        connected=true;
         SSLSocketFactory socketFactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
         clientSocket = (SSLSocket)socketFactory.createSocket(serverAddress, port);
         System.out.println("Connection established");
@@ -68,9 +71,7 @@ public class TCPClient {
             System.out.println("Response: "+response);
         } catch (IOException ex) {
             System.out.println("Client error: "+ex.getMessage());
-        } finally {
-            closeConnection();
-        }
+        } 
         return response;
     }
     
@@ -89,15 +90,20 @@ public class TCPClient {
         
     }
     /*PASAR EL SOCKET Y PASAR LA ACTION*/
-    public void buildMessage(String action,String productName){
+    public String buildMessage(String action,String productName){
 
         //método para enviar el mensaje de consultar, eliminar
         StringBuilder sb= new StringBuilder();
-        sb.append(action).append(this.clientSocket.getInetAddress()).append(productName);
-        sendMessage(sb);
+        sb.append(action).append(":")
+                .append(this.clientSocket.getInetAddress()).append(":")
+                .append(productName);
+        
+        String message=sendMessage(sb);
+        return message;
     }
     
     
+   
     //TODO: para enviar el mensaje se deben de tener otros tipos, para crear necesitamos
     //crear: 
     //private int quantity;
