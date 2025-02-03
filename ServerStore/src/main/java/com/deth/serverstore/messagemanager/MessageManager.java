@@ -4,6 +4,9 @@
  */
 package com.deth.serverstore.messagemanager;
 
+import com.deth.serverstore.product.Product;
+import java.util.ArrayList;
+
 /**
  *
  * @author david
@@ -16,6 +19,34 @@ public class MessageManager {
 
         return parts;
     }
+    
+    public String buildInventory(ArrayList<Product> products){
+        StringBuilder sb= new StringBuilder();
+        int cont=0;
+        
+        if (products.size()!=0) {
+            
+          for (Product product : products) {
+               cont+=1;
+               sb.append(product.getProductName())
+                       .append(",")
+                       .append(Float.toString(product.getProductPrice()));
+                       
+               
+               if (cont<products.size()) {
+                  sb.append("|");
+              }
+            }  
+          
+          String message=sb.toString();
+          return message; 
+        }
+        
+        
+        return "ERROR...no hay productos en el inventario";
+    }
+    
+    
 }
 //construimos el mensaje para mandarlo listo a product manager
 //todo o hacemos em serverStore

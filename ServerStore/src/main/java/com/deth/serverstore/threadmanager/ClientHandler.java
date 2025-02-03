@@ -4,6 +4,7 @@
  */
 package com.deth.serverstore.threadmanager;
 
+import com.deth.serverstore.logmanager.LogFile;
 import com.deth.serverstore.messagemanager.MessageManager;
 import com.deth.serverstore.productmanager.ProductManager;
 import java.io.DataInputStream;
@@ -18,10 +19,15 @@ import java.net.Socket;
 public class ClientHandler extends Thread{
     private Socket clientSocket;
     private ProductManager productManager;
+    MessageManager messageManager;
+    LogFile log ;
+
 
     public ClientHandler(Socket socket, ProductManager productManager) {
         this.clientSocket = socket;
         this.productManager = productManager;
+        messageManager = new MessageManager();
+        log = new LogFile("log.txt", "logs.csv");
     }
 
     @Override
@@ -38,7 +44,6 @@ public class ClientHandler extends Thread{
                         break;
                     }
 
-                    MessageManager messageManager = new MessageManager();
                     String[] response = messageManager.buildMessage(clientMessage);
                     String flag = selectOperation(response);
                     outputStream.writeUTF(flag);
@@ -51,17 +56,36 @@ public class ClientHandler extends Thread{
             }
         
     }
-     private String selectOperation(String[] response) {
+     private String selectOperation(String[] response) throws IOException {
             String operation = response[0];
             String message = "Error en la operación";
 
             switch (operation) {
                 case "add":
                     message=productManager.createProduct(response);
+                    log.escribirLog(operation, response[1], response[2]);
                     break;
                 case "delete":
                     message=productManager.deleteProduct(response[2]);
+                    log.escribirLog(operation, response[1], response[2]);
+
                     break;
+                    
+                case "edit"://TODO
+                    log.escribirLog(operation, response[1], response[2]);
+                    break;
+                    
+                case "exportlog":
+                    log.exportarALogCSV();
+                    break;
+                    
+                case "exportinventory":
+                     //aqui debemos de tomar los elementos del inventario
+                     //y pasarlos a un string
+            
+                     message=messageManager.buildInventory(productManager.getProducts());
+                     break;
+                     
                 default:
                     message = "Operación no reconocida";
             }

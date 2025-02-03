@@ -4,6 +4,7 @@
  */
 package com.deth.clientstore.networklayer;
 
+import com.deth.clientstore.csvmanager.Csv;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
+
 
 /**
  * Class that handle connection with the server
@@ -25,12 +27,17 @@ public class TCPClient {
     private DataOutputStream outputStream;
     private boolean connected;
     
+    Csv csvManager;
+    
     public TCPClient(String serverAddress, int port) {
         try {
             this.serverAddress = serverAddress;
             this.port = port;
             this.connected=false;
             connect();
+            
+            csvManager=new Csv();
+            
         } catch (IOException ex) {
             Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -69,6 +76,7 @@ public class TCPClient {
             System.out.println("mensaje enviado de manera exitosa");
             response = inputStream.readUTF();//aquí obtenemos la respuesta del servidor
             System.out.println("Response: "+response);
+            
         } catch (IOException ex) {
             System.out.println("Client error: "+ex.getMessage());
         } 
@@ -102,6 +110,25 @@ public class TCPClient {
         return message;
     }
     
+    public String buildMessage(String action){
+
+        //método para enviar el mensaje de consultar, eliminar
+        StringBuilder sb= new StringBuilder();
+        sb.append(action);
+        
+        String message=sendMessage(sb);
+        return message;
+    }
+    
+    public boolean buildCsv(String inventorty){//podemos hacerlo boolean
+        if (csvManager.builInventoryCsv(inventorty)) {
+            return true;
+        }
+        return false;
+        
+    }
+    
+    
     
    
     //TODO: para enviar el mensaje se deben de tener otros tipos, para crear necesitamos
@@ -132,10 +159,5 @@ public class TCPClient {
         
         
     }
-    
-    
-    
-     
-    
     
 }

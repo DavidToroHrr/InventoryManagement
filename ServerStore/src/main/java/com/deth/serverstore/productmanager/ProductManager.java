@@ -34,7 +34,7 @@ public class ProductManager {
         int quantity=Integer.parseInt(response[5]);
         
         Product p1 = new Product(productName, productDescription, productPrice, quantity);
-        products.add(p1);
+        getProducts().add(p1);
         message="Producto creado con éxito";
         return message;
     }
@@ -47,7 +47,7 @@ public class ProductManager {
             return message;
         }
         
-        Iterator<Product> iterator = products.iterator();
+        Iterator<Product> iterator = getProducts().iterator();
         while (iterator.hasNext()) {
             Product product = iterator.next();
             if (product.getProductName().equals(name)) {
@@ -59,7 +59,7 @@ public class ProductManager {
     }
     
     public boolean verifyProduct(String name){
-        for (Product product : products) {
+        for (Product product : getProducts()) {
             if (product.getProductName().equals(name)) {
                 return true;
             }
@@ -68,7 +68,7 @@ public class ProductManager {
     }
 
     public Product searchProduct(String name) {
-        for (Product product : products) {
+        for (Product product : getProducts()) {
             if (product.getProductName().equals(name)) {
                 return product;
             }
@@ -77,4 +77,11 @@ public class ProductManager {
     }
     
     //public boolean editProduct(){}
+
+    /**
+     * @return the products
+     */
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
 }
