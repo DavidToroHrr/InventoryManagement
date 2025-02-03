@@ -1,0 +1,9 @@
+Fecha, Operacion, IP, Recurso
+2025-02-03 11:14:35,generar reporte,192.168.1.1,Producto 123
+2025-02-03 11:14:35,Eliminar,192.168.1.2,Producto ABC
+2025-02-03 11:14:35,editar,192.168.1.3,Producto 456
+2025-02-03 11:14:35,Buscar,192.168.1.4,Producto XYZ
+2025-02-03 13:48:13,generar reporte,192.168.1.1,Producto 123
+2025-02-03 13:48:13,Eliminar,192.168.1.2,Producto ABC
+2025-02-03 13:48:13,editar,192.168.1.3,Producto 456
+2025-02-03 13:48:13,Buscar,192.168.1.4,Producto XYZ

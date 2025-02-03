@@ -24,8 +24,6 @@ public class ClientStore {
     }
     
     public static void main(String[] args) {
-
-        System.out.println("Hello World!");
         UserInterface userInterface=new UserInterface();
         userInterface.setVisible(true);
         userInterface.setLocationRelativeTo(null);
