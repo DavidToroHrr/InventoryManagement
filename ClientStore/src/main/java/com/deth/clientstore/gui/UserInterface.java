@@ -4,23 +4,32 @@
  */
 package com.deth.clientstore.gui;
 
-import com.deth.clientstore.ClientStore;
-import com.deth.clientstore.networklayer.TCPClient;
-import javax.swing.JOptionPane;
+import com.deth.clientstore.ClientStore; // Importa la clase ClientStore desde el paquete com.deth.clientstore
+import com.deth.clientstore.networklayer.TCPClient; // Importa la clase TCPClient desde el paquete com.deth.clientstore.networklayer
+import javax.swing.JOptionPane; // Importa JOptionPane para mostrar cuadros de diálogo en la interfaz gráfica
 
 /**
- *
+ * Clase que representa la interfaz de usuario de la tienda cliente.
+ * Extiende de javax.swing.JFrame, lo que permite crear una ventana gráfica.
+ * 
  * @author david
  */
 public class UserInterface extends javax.swing.JFrame {
+    // Atributo que representa el gestor del cliente en la tienda
     ClientStore clientManager;
+    
+    // Atributo que maneja la conexión TCP con el servidor
     private TCPClient client;
 
-    /**
-     * Creates new form UserInterface
+   /**
+     * Constructor de la clase UserInterface.
+     * Inicializa los componentes gráficos de la interfaz y establece una conexión con el servidor.
      */
     public UserInterface() {
+        // Inicializa los componentes gráficos definidos en el diseño
         initComponents();
+        
+        // Crea una nueva instancia de TCPClient, especificando la dirección IP del servidor y el puerto
         client = new TCPClient("192.168.192.31", 9090);
 
     }

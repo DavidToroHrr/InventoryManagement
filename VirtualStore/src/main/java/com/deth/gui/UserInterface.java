@@ -3,18 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.deth.gui;
-
 /**
- *
+ * Clase que representa la interfaz de usuario de la aplicación.
+ * Extiende de javax.swing.JFrame, lo que permite crear una ventana gráfica.
+ * 
  * @author david
  */
 public class UserInterface extends javax.swing.JFrame {
 
+    
     /**
-     * Creates new form UserInterface
+     * Constructor de la clase UserInterface.
+     * Llama al método initComponents() para inicializar los componentes gráficos de la interfaz.
      */
     public UserInterface() {
-        initComponents();
+        initComponents();// Método que inicializa todos los componentes gráficos definidos en el diseño
     }
 
     /**

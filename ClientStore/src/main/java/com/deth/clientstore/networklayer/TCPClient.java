@@ -14,53 +14,95 @@ import java.util.logging.Logger;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
-
 /**
- * Class that handle connection with the server
+ * Clase TCPClient
+ * 
+ * Maneja la conexión con el servidor utilizando un socket seguro (SSL).
+ * Permite enviar y recibir mensajes con el servidor y gestionar la creación de archivos CSV.
+ * 
  * @author david
  */
 public class TCPClient {
+    
+    // Dirección del servidor al que se conectará el cliente
     private String serverAddress;
+    
+    // Puerto en el que el servidor está escuchando conexiones
     private int port;
+    
+    // Socket SSL para la comunicación segura con el servidor
     private SSLSocket clientSocket;
+    
+    // Flujo de entrada para recibir datos del servidor
     private DataInputStream inputStream;
+    
+    // Flujo de salida para enviar datos al servidor
     private DataOutputStream outputStream;
+    
+    // Indica si la conexión con el servidor está activa
     private boolean connected;
     
+    // Instancia de la clase Csv para la gestión de archivos CSV
     Csv csvManager;
     
+    /**
+     * Constructor de TCPClient.
+     * 
+     * Inicializa la conexión con el servidor y crea una instancia del manejador de archivos CSV.
+     * 
+     * @param serverAddress Dirección del servidor.
+     * @param port Puerto de conexión.
+     */
     public TCPClient(String serverAddress, int port) {
         try {
             this.serverAddress = serverAddress;
             this.port = port;
-            this.connected=false;
-            connect();
-            
-            csvManager=new Csv();
-            
-        } catch (IOException ex) {
-            Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            this.connected = false;
+            connect(); // Llama al método connect para establecer la conexión
 
+            csvManager = new Csv(); // Inicializa la gestión de CSV
+
+        } catch (IOException ex) {
+            Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, "Error al conectar con el servidor", ex);
+        }
     }
     
-    public void connect() throws IOException{
-        //clientSocket = new (serverAddress, port);
-        System.out.println("ENTRAMOS A CONNCET PARA CREAR EL SOCKET");
-        System.out.println("en connect: sadress, port"+serverAddress+" "+port);
+    /**
+     * Método connect
+     * 
+     * Establece la conexión SSL con el servidor y configura los flujos de entrada y salida.
+     * 
+     * @throws IOException Si ocurre un error al conectar el socket.
+     */
+    public void connect() throws IOException {
+        System.out.println("ENTRAMOS A CONNECT PARA CREAR EL SOCKET");
+        System.out.println("En connect: serverAddress, port -> " + serverAddress + " " + port);
         
-        connected=true;
-        SSLSocketFactory socketFactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
-        clientSocket = (SSLSocket)socketFactory.createSocket(serverAddress, port);
+        connected = true;
+        
+        // Crea un socket SSL utilizando la fábrica de sockets
+        SSLSocketFactory socketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+        clientSocket = (SSLSocket) socketFactory.createSocket(serverAddress, port);
+        
         System.out.println("Connection established");
+        
+        // Inicializa los flujos de entrada y salida
         inputStream = new DataInputStream(clientSocket.getInputStream());
         outputStream = new DataOutputStream(clientSocket.getOutputStream());
     }
     
-    public String sendMessage(StringBuilder sb){
-        //TODO: String action,SSLSocket clientSocket,string prodcuctName
+    /**
+     * Método sendMessage
+     * 
+     * Envía un mensaje al servidor y espera una respuesta.
+     * 
+     * @param sb Mensaje a enviar, en formato StringBuilder.
+     * @return Respuesta del servidor.
+     */
+    public String sendMessage(StringBuilder sb) {
         String response = "Error";
         try {
+            // Verifica que el socket y el flujo de salida estén disponibles
             if (clientSocket == null || clientSocket.isClosed()) {
                 throw new IOException("El socket no está conectado.");
             }
@@ -68,95 +110,110 @@ public class TCPClient {
                 throw new IOException("El outputStream no está inicializado.");
             }
             
-            //System.out.println("ss"+clientSocket.getInetAddress());
-            //aqui pasamos el sb a string
-            String message = sb.toString();
-            System.out.println("Sending: "+message);
-            outputStream.writeUTF(message);//aquí se envía el mensaje
-            System.out.println("mensaje enviado de manera exitosa");
-            response = inputStream.readUTF();//aquí obtenemos la respuesta del servidor
-            System.out.println("Response: "+response);
+            String message = sb.toString(); // Convierte StringBuilder a String
+            System.out.println("Sending: " + message);
+            
+            outputStream.writeUTF(message); // Envía el mensaje al servidor
+            System.out.println("Mensaje enviado de manera exitosa");
+            
+            response = inputStream.readUTF(); // Recibe la respuesta del servidor
+            System.out.println("Response: " + response);
             
         } catch (IOException ex) {
-            System.out.println("Client error: "+ex.getMessage());
+            System.out.println("Client error: " + ex.getMessage());
         } 
         return response;
     }
     
-    public String buildMessage(String action,String productName,String productDescription,float productPrice,int quantity){
-   
-        StringBuilder sb= new StringBuilder();
+    /**
+     * Método buildMessage
+     * 
+     * Construye un mensaje con información de un producto y lo envía al servidor.
+     * 
+     * @param action Acción a realizar (crear, editar, eliminar, consultar).
+     * @param productName Nombre del producto.
+     * @param productDescription Descripción del producto.
+     * @param productPrice Precio del producto.
+     * @param quantity Cantidad del producto.
+     * @return Respuesta del servidor.
+     */
+    public String buildMessage(String action, String productName, String productDescription, float productPrice, int quantity) {
+        StringBuilder sb = new StringBuilder();
         sb.append(action).append(":")
-                .append(this.clientSocket.getInetAddress().getHostAddress()).append(":")
-                .append(productName).append(":")
-                .append(productDescription).append(":")
-                .append(productPrice).append(":")
-                .append(quantity);
+          .append(this.clientSocket.getInetAddress().getHostAddress()).append(":")
+          .append(productName).append(":")
+          .append(productDescription).append(":")
+          .append(productPrice).append(":")
+          .append(quantity);
         
-        String message=sendMessage(sb);     
-        return message;
-        
-    }
-    /*PASAR EL SOCKET Y PASAR LA ACTION*/
-    public String buildMessage(String action,String productName){
-
-        //método para enviar el mensaje de consultar, eliminar
-        StringBuilder sb= new StringBuilder();
-        sb.append(action).append(":")
-                .append(this.clientSocket.getInetAddress()).append(":")
-                .append(productName);
-        
-        String message=sendMessage(sb);
-        return message;
+        return sendMessage(sb);
     }
     
-    public String buildMessage(String action){
-
-        //método para enviar el mensaje de consultar, eliminar
-        StringBuilder sb= new StringBuilder();
+    /**
+     * Método buildMessage (sobrecarga)
+     * 
+     * Construye y envía un mensaje con solo el nombre del producto.
+     * Se usa para acciones como consultar o eliminar productos.
+     * 
+     * @param action Acción a realizar.
+     * @param productName Nombre del producto.
+     * @return Respuesta del servidor.
+     */
+    public String buildMessage(String action, String productName) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(action).append(":")
+          .append(this.clientSocket.getInetAddress()).append(":")
+          .append(productName);
+        
+        return sendMessage(sb);
+    }
+    
+    /**
+     * Método buildMessage (sobrecarga)
+     * 
+     * Construye y envía un mensaje sin parámetros adicionales.
+     * Se usa para acciones generales como obtener toda la información del servidor.
+     * 
+     * @param action Acción a realizar.
+     * @return Respuesta del servidor.
+     */
+    public String buildMessage(String action) {
+        StringBuilder sb = new StringBuilder();
         sb.append(action);
         
-        String message=sendMessage(sb);
-        return message;
+        return sendMessage(sb);
     }
     
-    public boolean buildCsv(String inventorty){//podemos hacerlo boolean
-        if (csvManager.buildInventoryCsv(inventorty)) {
-            return true;
-        }
-        return false;
-        
+    /**
+     * Método buildCsv
+     * 
+     * Genera un archivo CSV a partir de un inventario recibido.
+     * 
+     * @param inventory Datos del inventario en formato String.
+     * @return `true` si la generación fue exitosa, `false` en caso contrario.
+     */
+    public boolean buildCsv(String inventory) {
+        return csvManager.buildInventoryCsv(inventory);
     }
     
-    
-    
-   
-    //TODO: para enviar el mensaje se deben de tener otros tipos, para crear necesitamos
-    //crear: 
-    //private int quantity;
-    //private int id;
-    //private String productName;
-    //private String productDescription;
-    //private float productPrice;
-    
-    //eliminar: productName
-    //consultar: productName
-    //editar: productName, puede(cantidad,id,nombrem,descripción,)
-    public void closeConnection(){
+    /**
+     * Método closeConnection
+     * 
+     * Cierra la conexión con el servidor y libera los recursos utilizados.
+     */
+    public void closeConnection() {
         try {
-            if (connected) {
-                buildMessage("exit");
+            if (inputStream != null) {
                 inputStream.close();
+            }
+            if (outputStream != null) {
                 outputStream.close();
+            }
+            if (clientSocket != null) {
                 clientSocket.close();
-                connected = false;
-                System.out.println("Connection closed.");
             }
         } catch (IOException ex) {
             System.out.println("Error closing connection: " + ex.getMessage());
         }
-        
-        
     }
-    
 }
