@@ -64,6 +64,6 @@ public class MessageManager {
         }
 
         // Return error message if there are no products
-        return "ERROR... no hay productos en el inventario";
+        return "ERROR... there are no products in the inventory.";
     }
 }

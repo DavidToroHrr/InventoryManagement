@@ -39,7 +39,7 @@ public class ProductManager {
 
         // Check if product already exists
         if (verifyProduct(response[2])) {
-            message = "Error... el producto: " + response[2] + " ya existe";
+            message = "Error... the product: " + response[2] + " already exist";
             return message;
         }
 
@@ -53,7 +53,7 @@ public class ProductManager {
         Product p1 = new Product(productName, productDescription, productPrice, quantity);
         products.add(p1);
         
-        return "Producto creado con éxito";
+        return "Product succesfully created";
     }
 
     /**
@@ -67,7 +67,7 @@ public class ProductManager {
 
         // Check if product exists
         if (!verifyProduct(name)) {
-            message = "Error... el producto: " + name + " no existe";
+            message = "Error... the product: " + name + " doest'n exist";
             return message;
         }
 
@@ -77,7 +77,7 @@ public class ProductManager {
             Product product = iterator.next();
             if (product.getProductName().equals(name)) {
                 iterator.remove();
-                return "Producto " + name + " eliminado satisfactoriamente";
+                return "Product " + name + " deleted succesfully";
             }
         }
 
@@ -104,7 +104,7 @@ public class ProductManager {
             if (product.getProductName().equals(oldName)) {
                 // Check if the new name already exists in another product
                 if (!oldName.equals(newName) && verifyProduct(newName)) {
-                    return "Error... el producto: " + newName + " ya existe";
+                    return "Error... the product: " + newName + " already exist";
                 }
 
                 // Update product details
@@ -113,11 +113,11 @@ public class ProductManager {
                 product.setProductPrice(newPrice);
                 product.setQuantity(newQuantity);
 
-                return "Producto actualizado correctamente";
+                return "Product updated correctly";
             }
         }
 
-        return "Error... el producto: " + oldName + " no existe";
+        return "Error... the product: " + oldName + " doesn't exist";
     }
 
     /**

@@ -86,7 +86,7 @@ public class ClientHandler extends Thread {
      */
     private String selectOperation(String[] response) throws IOException {
         String operation = response[0];
-        String message = "Error en la operación";
+        String message = "Error in the operation";
 
         switch (operation) {
             case "add":
@@ -106,13 +106,13 @@ public class ClientHandler extends Thread {
 
             case "exportlog":
                 log.exportAllLogsToCsv("LogsRegister");
-                message = "Éxito en la exportación del CSV";
+                message = "CSV export success";
                 break;
 
             case "exportinventory":
                 message = messageManager.buildInventory(productManager.getProducts());
                 if (csv.buildInventoryCsv(message)) {
-                    System.out.println("Inventario guardado en el servidor");
+                    System.out.println("Inventory stored");
                 }
                 break;
 

@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.deth.serverstore.filemanager.LogFile;
 
 /**
  * The ServerStore class initializes and starts the TCP server for handling client connections.
