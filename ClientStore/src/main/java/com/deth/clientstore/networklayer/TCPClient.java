@@ -121,7 +121,7 @@ public class TCPClient {
     }
     
     public boolean buildCsv(String inventorty){//podemos hacerlo boolean
-        if (csvManager.builInventoryCsv(inventorty)) {
+        if (csvManager.buildInventoryCsv(inventorty)) {
             return true;
         }
         return false;
@@ -143,18 +143,17 @@ public class TCPClient {
     //consultar: productName
     //editar: productName, puede(cantidad,id,nombrem,descripción,)
     public void closeConnection(){
-        try{
-            if(inputStream != null){
-            inputStream.close();
-            }
-            if(outputStream != null){
+        try {
+            if (connected) {
+                buildMessage("exit");
+                inputStream.close();
                 outputStream.close();
-            }
-            if(clientSocket != null){
                 clientSocket.close();
+                connected = false;
+                System.out.println("Connection closed.");
             }
-        }catch(IOException ex){
-            System.out.println("Error closing connection: "+ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println("Error closing connection: " + ex.getMessage());
         }
         
         

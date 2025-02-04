@@ -262,7 +262,7 @@ public class UserInterface extends javax.swing.JFrame {
         //para el CSV
         String message=client.buildMessage("exportinventory");
         
-        if (message==null ) {
+        if (message!=null ) {
             if (client.buildCsv(message)) {
                 JOptionPane.showMessageDialog(null, "Inventario generado con éxito", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
             }  
@@ -288,6 +288,7 @@ public class UserInterface extends javax.swing.JFrame {
     private void closeConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeConnectionActionPerformed
         // TODO add your handling code here:
         client.closeConnection();
+        setVisible(false);
     }//GEN-LAST:event_closeConnectionActionPerformed
 
     private void exportLogCsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportLogCsvActionPerformed
