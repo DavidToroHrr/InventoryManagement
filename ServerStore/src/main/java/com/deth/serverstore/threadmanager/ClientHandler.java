@@ -27,7 +27,7 @@ public class ClientHandler extends Thread{
         this.clientSocket = socket;
         this.productManager = productManager;
         messageManager = new MessageManager();
-        log = new LogFile("log.txt", "logs.csv");
+        log = new LogFile();
     }
 
     @Override
@@ -45,8 +45,8 @@ public class ClientHandler extends Thread{
                     }
 
                     String[] response = messageManager.buildMessage(clientMessage);
-                    String flag = selectOperation(response);
-                    outputStream.writeUTF(flag);
+                    String fmessage = selectOperation(response);
+                    outputStream.writeUTF(fmessage);
                 }
 
                 System.out.println("Closing connection with client: " + clientSocket.getInetAddress());
@@ -63,26 +63,24 @@ public class ClientHandler extends Thread{
             switch (operation) {
                 case "add":
                     message=productManager.createProduct(response);
-                    log.escribirLog(operation, response[1], response[2]);
+                    log.writeLog(operation, response[1], response[2]);
                     break;
                 case "delete":
                     message=productManager.deleteProduct(response[2]);
-                    log.escribirLog(operation, response[1], response[2]);
-
+                    log.writeLog(operation, response[1], response[2]);
                     break;
                     
                 case "edit"://TODO
-                    log.escribirLog(operation, response[1], response[2]);
+                    message=productManager.editProduct(response);
+                    log.writeLog(operation, response[1], response[2]);
                     break;
                     
                 case "exportlog":
-                    log.exportarALogCSV();
+                    log.exportAllLogsToCsv("LogsRegister");
+                    message="Éxito en la exportación del CSV";
                     break;
                     
                 case "exportinventory":
-                     //aqui debemos de tomar los elementos del inventario
-                     //y pasarlos a un string
-            
                      message=messageManager.buildInventory(productManager.getProducts());
                      break;
                      

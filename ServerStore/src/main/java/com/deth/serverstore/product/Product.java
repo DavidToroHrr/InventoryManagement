@@ -14,7 +14,6 @@ public class Product {
     
     
     private int quantity;
-    private int id;
     private String productName;
     private String productDescription;
     private float productPrice;
@@ -82,17 +81,5 @@ public class Product {
         this.quantity = quantity;
     }
 
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
+ 
 }

@@ -214,27 +214,38 @@ public class UserInterface extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductsActionPerformed
-        // TODO add your handling code here:
-        //añadir
-        //tendríamos que llamar una función para enviar el msg al server
-        
-        
-        if (nameProduct.getText().isBlank() | priceProduct.getText().isBlank() | productDescription.getText().isBlank() | quantityProduct.getText().isBlank() ) {
-            JOptionPane.showMessageDialog(null, "Todos los campos deben de estar llenos", "ERROR", JOptionPane.ERROR_MESSAGE);
+   
+        if (nameProduct.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "El campo Nombre del Producto debe estar lleno", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        }else{
-            String name=nameProduct.getText();
-            float price=Float.parseFloat(priceProduct.getText());
-            String description=productDescription.getText();
-            int quantity=Integer.parseInt(quantityProduct.getText());
-            
+        if (priceProduct.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "El campo Precio del Producto debe estar lleno", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (productDescription.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "El campo Descripción del Producto debe estar lleno", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (quantityProduct.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "El campo Cantidad del Producto debe estar lleno", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            String name = nameProduct.getText();
+            float price = Float.parseFloat(priceProduct.getText());
+            String description = productDescription.getText();
+            int quantity = Integer.parseInt(quantityProduct.getText());
+
             String message=client.buildMessage("add", name, description, price,quantity);
             JOptionPane.showMessageDialog(null, message, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-
-        }
-        
-        
-        
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Error en el formato de los datos. Asegúrate de ingresar un número válido en Precio y Cantidad.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }  
     }//GEN-LAST:event_addProductsActionPerformed
 
     private void deleteProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteProductsActionPerformed
@@ -251,8 +262,40 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteProductsActionPerformed
 
     private void editProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProductsActionPerformed
-        // TODO add your handling code here:
-        //editar
+        if (nameProduct.getText().isBlank()) {
+        JOptionPane.showMessageDialog(null, "El campo Nombre del Producto debe estar lleno", "ERROR", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    if (priceProduct.getText().isBlank()) {
+        JOptionPane.showMessageDialog(null, "El campo Precio del Producto debe estar lleno", "ERROR", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    if (productDescription.getText().isBlank()) {
+        JOptionPane.showMessageDialog(null, "El campo Descripción del Producto debe estar lleno", "ERROR", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    if (quantityProduct.getText().isBlank()) {
+        JOptionPane.showMessageDialog(null, "El campo Cantidad del Producto debe estar lleno", "ERROR", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Manejo de excepciones por tipos de datos incorrectos
+    try {
+        String name = nameProduct.getText();
+        float price = Float.parseFloat(priceProduct.getText());
+        String description = productDescription.getText();
+        int quantity = Integer.parseInt(quantityProduct.getText());
+
+        // Construcción del mensaje para editar
+        String message = client.buildMessage("edit", name, description, price, quantity);
+        JOptionPane.showMessageDialog(null, message, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Error en el formato de los datos. Asegúrate de ingresar un número válido en Precio y Cantidad.", "ERROR", JOptionPane.ERROR_MESSAGE);
+    }
+        
         
         
     }//GEN-LAST:event_editProductsActionPerformed

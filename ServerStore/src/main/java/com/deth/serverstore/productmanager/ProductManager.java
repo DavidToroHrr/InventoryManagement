@@ -57,6 +57,30 @@ public class ProductManager {
         }
         return message;
     }
+    public String editProduct(String[] response) {
+    String newName=response[2];
+    String newDescription=response[3];
+    float newPrice=Float.parseFloat(response[4]);
+    int newQuantity=Integer.parseInt(response[5]);
+    for (Product product : products) {
+        
+        // Verifica si el nuevo nombre ya existe en otro producto
+        if (verifyProduct(newName)) {
+            return "Error... el producto: " + newName + " ya existe";
+        }
+
+        // Actualiza los valores del producto
+        product.setProductName(newName);
+        product.setProductDescription(newDescription);
+        product.setProductPrice(newPrice);
+        product.setQuantity(newQuantity);
+
+        return "Producto actualizado correctamente";
+        
+    }
+    return "Error... no se pudo actualizar el producto";
+}
+
     
     public boolean verifyProduct(String name){
         for (Product product : getProducts()) {
