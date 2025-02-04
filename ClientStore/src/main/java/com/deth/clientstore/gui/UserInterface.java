@@ -9,15 +9,17 @@ import com.deth.clientstore.networklayer.TCPClient;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author david
+ * The UserInterface class represents the graphical user interface for 
+ * managing the inventory in the ClientStore application.
+ * It allows users to add, delete, edit, export inventory, and manage product details.
  */
 public class UserInterface extends javax.swing.JFrame {
     ClientStore clientManager;
     private TCPClient client;
 
     /**
-     * Creates new form UserInterface
+     * Creates a new UserInterface form.
+     * Initializes the UI components and establishes a TCP client connection.
      */
     public UserInterface() {
         initComponents();
@@ -39,11 +41,9 @@ public class UserInterface extends javax.swing.JFrame {
         deleteProducts = new javax.swing.JButton();
         editProducts = new javax.swing.JButton();
         exportInventory = new javax.swing.JButton();
-        searchProduct = new javax.swing.JButton();
-        searchNameProduct = new javax.swing.JTextField();
         nameProduct = new javax.swing.JTextField();
         priceProduct = new javax.swing.JTextField();
-        quantityProduct = new javax.swing.JTextField();
+        quantityNewProduct = new javax.swing.JTextField();
         productDescription = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -51,11 +51,24 @@ public class UserInterface extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         closeConnection = new javax.swing.JButton();
         exportLogCsv = new javax.swing.JButton();
+        nameProductDelete = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        nameNewProduct = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        nameOldProduct = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        priceNewProduct = new javax.swing.JTextField();
+        productNewDescription = new javax.swing.JTextField();
+        quantityProduct = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        clearFields = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("User Interface");
+        jLabel1.setFont(new java.awt.Font("SimSun-ExtB", 1, 24)); // NOI18N
+        jLabel1.setText("Inventario");
 
         addProducts.setText("add products");
         addProducts.addActionListener(new java.awt.event.ActionListener() {
@@ -85,13 +98,6 @@ public class UserInterface extends javax.swing.JFrame {
             }
         });
 
-        searchProduct.setText("search products");
-        searchProduct.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchProductActionPerformed(evt);
-            }
-        });
-
         nameProduct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameProductActionPerformed(evt);
@@ -116,7 +122,7 @@ public class UserInterface extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setText("Descripción del producto");
 
-        closeConnection.setText("salir");
+        closeConnection.setText("exit");
         closeConnection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeConnectionActionPerformed(evt);
@@ -130,89 +136,201 @@ public class UserInterface extends javax.swing.JFrame {
             }
         });
 
+        nameProductDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameProductDeleteActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel6.setText("Nombre del producto a eliminar");
+
+        nameNewProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameNewProductActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel7.setText("Nombre anterior del producto");
+
+        nameOldProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameOldProductActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel8.setText("Nueva cantidad del producto");
+
+        productNewDescription.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                productNewDescriptionActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel9.setText("Nombre nuevo del producto");
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel10.setText("Nuevo precio del producto");
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel11.setText("Nueva descripción del producto");
+
+        clearFields.setText("clean fields");
+        clearFields.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearFieldsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(editProducts)
+                .addGap(76, 76, 76))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(productDescription, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(nameProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
                                 .addComponent(priceProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                                .addComponent(quantityProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                                .addComponent(productDescription))
-                            .addComponent(searchNameProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(closeConnection))
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel5)
-                            .addComponent(searchProduct)
-                            .addComponent(exportInventory))
-                        .addGap(60, 60, 60)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addProducts)
-                            .addComponent(deleteProducts)
-                            .addComponent(editProducts)
-                            .addComponent(exportLogCsv)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(21, 21, 21)
+                                    .addComponent(addProducts))
+                                .addComponent(quantityProduct)))
+                        .addGap(104, 104, 104)
+                        .addComponent(nameProductDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(207, 207, 207)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(51, 51, 51)
+                                .addComponent(jLabel4))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(53, 53, 53)
+                                .addComponent(jLabel2)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(366, 366, 366)
+                                .addComponent(jLabel10))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(98, 98, 98)
+                                .addComponent(jLabel6)
+                                .addGap(80, 80, 80)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel7)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(134, 134, 134)
+                                .addComponent(deleteProducts)
+                                .addGap(122, 122, 122)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(priceNewProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(quantityNewProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(nameNewProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(productNewDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9)
+                                    .addComponent(nameOldProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(220, 220, 220))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(closeConnection)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(exportInventory)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addComponent(exportLogCsv)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(clearFields)
+                        .addGap(139, 139, 139))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(300, 300, 300)
                         .addComponent(jLabel1)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(66, 66, 66)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(addProducts))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 20, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(priceProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(26, 26, 26))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(deleteProducts)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(nameProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nameProductDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nameOldProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(jLabel3))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(deleteProducts))))
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(quantityProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(priceProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameNewProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(productDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(editProducts)))
-                .addGap(61, 61, 61)
+                        .addComponent(quantityProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(quantityNewProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10)
+                        .addGap(6, 6, 6)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(searchNameProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchProduct))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                    .addComponent(jLabel5)
+                    .addComponent(priceNewProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(exportLogCsv)
+                    .addComponent(productDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addProducts)
+                    .addComponent(productNewDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(editProducts)
+                .addGap(51, 51, 51)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(closeConnection)
                     .addComponent(exportInventory)
-                    .addComponent(closeConnection))
-                .addGap(25, 25, 25))
+                    .addComponent(exportLogCsv)
+                    .addComponent(clearFields))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Adds a new product to the inventory.
+     * Validates input fields before sending the request.
+     */
     private void addProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductsActionPerformed
    
         if (nameProduct.getText().isBlank()) {
@@ -236,61 +354,71 @@ public class UserInterface extends javax.swing.JFrame {
         }
 
         try {
-            String name = nameProduct.getText();
-            float price = Float.parseFloat(priceProduct.getText());
-            String description = productDescription.getText();
-            int quantity = Integer.parseInt(quantityProduct.getText());
+            String name = nameProduct.getText();//name of the product
+            float price = Float.parseFloat(priceProduct.getText());//price of the product
+            String description = productDescription.getText();//description of the product
+            int quantity = Integer.parseInt(quantityProduct.getText());//quantity of the product
 
-            String message=client.buildMessage("add", name, description, price,quantity);
+            String message=client.buildMessage("add", name, description, price,quantity);//response of the server
             JOptionPane.showMessageDialog(null, message, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Error en el formato de los datos. Asegúrate de ingresar un número válido en Precio y Cantidad.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }  
     }//GEN-LAST:event_addProductsActionPerformed
-
+    /**
+     * Deletes a product from the inventory.
+     * Ensures that the product name is provided before deletion.
+     */
     private void deleteProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteProductsActionPerformed
         // TODO add your handling code here:
         //eliminar
-        if (nameProduct.getText().isBlank()) {
+        if (nameProductDelete.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "Debe de especificar el producto a eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
 
         }else{
-            String name=nameProduct.getText();
-            String message=client.buildMessage("delete", name);
+            String name=nameProductDelete.getText();//name of the product to delete
+            String message=client.buildMessage("delete", name);//response of the server
             JOptionPane.showMessageDialog(null, message, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_deleteProductsActionPerformed
-
+    /**
+     * Edits an existing product in the inventory.
+     * Validates input fields before sending the request.
+     */
     private void editProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProductsActionPerformed
-        if (nameProduct.getText().isBlank()) {
+        if (nameOldProduct.getText().isBlank()) {
         JOptionPane.showMessageDialog(null, "El campo Nombre del Producto debe estar lleno", "ERROR", JOptionPane.ERROR_MESSAGE);
         return;
     }
-
-    if (priceProduct.getText().isBlank()) {
+    if (nameNewProduct.getText().isBlank()) {
+        JOptionPane.showMessageDialog(null, "El campo Nombre del Producto debe estar lleno", "ERROR", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (priceNewProduct.getText().isBlank()) {
         JOptionPane.showMessageDialog(null, "El campo Precio del Producto debe estar lleno", "ERROR", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    if (productDescription.getText().isBlank()) {
+    if (productNewDescription.getText().isBlank()) {
         JOptionPane.showMessageDialog(null, "El campo Descripción del Producto debe estar lleno", "ERROR", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    if (quantityProduct.getText().isBlank()) {
+    if (quantityNewProduct.getText().isBlank()) {
         JOptionPane.showMessageDialog(null, "El campo Cantidad del Producto debe estar lleno", "ERROR", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
     // Manejo de excepciones por tipos de datos incorrectos
     try {
-        String name = nameProduct.getText();
-        float price = Float.parseFloat(priceProduct.getText());
-        String description = productDescription.getText();
-        int quantity = Integer.parseInt(quantityProduct.getText());
+        String newName = nameNewProduct.getText();//new name of the product
+        String oldName = nameOldProduct.getText();//old name of the product
+        float newPrice = Float.parseFloat(priceNewProduct.getText());//new price of the product
+        String newDescription = productNewDescription.getText();//new description
+        int newQuantity = Integer.parseInt(quantityNewProduct.getText());//new quantity
 
         // Construcción del mensaje para editar
-        String message = client.buildMessage("edit", name, description, price, quantity);
+        String message = client.buildMessage("edit",newName,oldName, newDescription, newPrice, newQuantity);
         JOptionPane.showMessageDialog(null, message, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
     } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(null, "Error en el formato de los datos. Asegúrate de ingresar un número válido en Precio y Cantidad.", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -299,11 +427,14 @@ public class UserInterface extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_editProductsActionPerformed
-
+    /**
+     * Exports the current inventory data as a CSV file.
+     * Displays a success or error message depending on the result.
+     */
     private void exportInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportInventoryActionPerformed
         // TODO add your handling code here:
         //para el CSV
-        String message=client.buildMessage("exportinventory");
+        String message=client.buildMessage("exportinventory");//result of the operation (response)
         
         if (message!=null ) {
             if (client.buildCsv(message)) {
@@ -314,11 +445,6 @@ public class UserInterface extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_exportInventoryActionPerformed
-
-    private void searchProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchProductActionPerformed
-        // TODO add your handling code here:
-        //buscar
-    }//GEN-LAST:event_searchProductActionPerformed
 
     private void nameProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameProductActionPerformed
         // TODO add your handling code here:
@@ -336,31 +462,80 @@ public class UserInterface extends javax.swing.JFrame {
 
     private void exportLogCsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportLogCsvActionPerformed
         // TODO add your handling code here:
-        String message=client.buildMessage("exportlog");
+        String message=client.buildMessage("exportlog");//response of the server
         JOptionPane.showMessageDialog(null, message, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
         
     }//GEN-LAST:event_exportLogCsvActionPerformed
+
+    private void nameProductDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameProductDeleteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameProductDeleteActionPerformed
+
+    private void nameNewProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameNewProductActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameNewProductActionPerformed
+
+    private void nameOldProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameOldProductActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameOldProductActionPerformed
+
+    private void productNewDescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productNewDescriptionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productNewDescriptionActionPerformed
+
+    private void clearFieldsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearFieldsActionPerformed
+        // TODO add your handling code here:
+      // clear add fields
+        nameProduct.setText("");
+        priceProduct.setText("");
+        quantityProduct.setText("");
+        productDescription.setText("");
+
+        //clear delete fields
+        nameProductDelete.setText("");
+
+        //clear edit fields
+        nameOldProduct.setText("");
+        nameNewProduct.setText("");
+        priceNewProduct.setText("");
+        quantityNewProduct.setText("");
+        productNewDescription.setText("");
+
+        JOptionPane.showMessageDialog(null, "Todos los campos han sido limpiados", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+
+    }//GEN-LAST:event_clearFieldsActionPerformed
 
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addProducts;
+    private javax.swing.JButton clearFields;
     private javax.swing.JButton closeConnection;
     private javax.swing.JButton deleteProducts;
     private javax.swing.JButton editProducts;
     private javax.swing.JButton exportInventory;
     private javax.swing.JButton exportLogCsv;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JTextField nameNewProduct;
+    private javax.swing.JTextField nameOldProduct;
     private javax.swing.JTextField nameProduct;
+    private javax.swing.JTextField nameProductDelete;
+    private javax.swing.JTextField priceNewProduct;
     private javax.swing.JTextField priceProduct;
     private javax.swing.JTextField productDescription;
+    private javax.swing.JTextField productNewDescription;
+    private javax.swing.JTextField quantityNewProduct;
     private javax.swing.JTextField quantityProduct;
-    private javax.swing.JTextField searchNameProduct;
-    private javax.swing.JButton searchProduct;
     // End of variables declaration//GEN-END:variables
 
     /**
